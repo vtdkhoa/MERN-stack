@@ -12,7 +12,7 @@ const User = require('../../models/User')
 /**
  * @route GET api/user/auth
  * @desc  User authentication
- * @access  Public
+ * @access  Private
  */
 router.get('/', auth, async (req, res) => {
   try {
