@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://khoavo:1907@devconnector.mnsgr.mongodb.net/DevConnector?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://khoavo:1907@devconnector.mnsgr.mongodb.net/DevConnector?retryWrites=true&w=majority",
+  "jwtToken": "secret_token"
 }
