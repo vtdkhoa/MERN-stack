@@ -6,7 +6,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 
+const auth = require('../../middleware/auth')
+
 const User = require('../../models/User')
+const Profile = require('../../models/Profile')
 
 /**
  * @route POST api/user
@@ -84,5 +87,25 @@ router.post(
     }
   }
 )
+
+/**
+ * @route DELETE api/user
+ * @desc  Delete user
+ * @access  Private
+ */
+router.delete('/', auth, async (req, res) => {
+  try {
+    // Remove user
+    await User.findOneAndRemove({ _id: req.user.id })
+    // Remove profile
+    await Profile.findOneAndRemove({ user: req.user.id })
+
+    res.json({ msg: 'User deleted.' })
+  } catch (error) {
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+})
 
 module.exports = router
