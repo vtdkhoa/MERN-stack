@@ -10,13 +10,15 @@ const {
   createProfile,
   getProfiles,
   getProfileByUserId,
-  updateExperience
+  updateExperience,
+  updateEducation
 } = require('../../controllers/profile')
 
 // Validator
 const {
   createProfileValidator,
-  updateExperienceValidator
+  updateExperienceValidator,
+  updateEducationValidator
 } = require('../../validators/profile')
 
 /**
@@ -56,6 +58,17 @@ router.patch(
   '/update/experience',
   updateExperienceValidator,
   updateExperience
+)
+
+/**
+ * @route PATCH api/profile/update/education
+ * @desc  Update [education]
+ * @access  Private
+ */
+router.patch(
+  '/update/education',
+  updateEducationValidator,
+  updateEducation
 )
 
 module.exports = router
