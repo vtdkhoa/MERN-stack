@@ -180,7 +180,7 @@ router.get('/user/:user_id', async (req, res) => {
 
 /**
  * @route PATCH api/profile/update/experience
- * @desc  Update / Add [experience, education]
+ * @desc  Update [experience]
  * @access  Private
  */
 router.patch(
