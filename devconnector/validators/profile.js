@@ -20,7 +20,18 @@ const updateExperienceValidator = [
   ]
 ]
 
+const updateEducationValidator = [
+  auth,
+  [
+    check('school', 'School is required.').not().isEmpty(),
+    check('degree', 'Degree is required.').not().isEmpty(),
+    check('fieldOfStudy', 'Field of Study is required.').not().isEmpty(),
+    check('from', 'From date is required.').not().isEmpty()
+  ]
+]
+
 module.exports = {
   createProfileValidator,
-  updateExperienceValidator
+  updateExperienceValidator,
+  updateEducationValidator
 }

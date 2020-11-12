@@ -184,10 +184,51 @@ const updateExperience = async (req, res) => {
   }
 }
 
+const updateEducation = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({ errors: errors.array() })
+  }
+
+  const {
+    school,
+    degree,
+    fieldOfStudy,
+    from, to,
+    current,
+    description
+  } = req.body
+
+  const newEducation = {
+    school,
+    degree,
+    fieldOfStudy,
+    from, to,
+    current,
+    description
+  }
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+    profile.education.unshift(newEducation)
+    profile.save()
+
+    res.json(profile)
+  } catch (error) {
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+}
+
 module.exports = {
   getCurrentUserProfile,
   createProfile,
   getProfiles,
   getProfileByUserId,
-  updateExperience
+  updateExperience,
+  updateEducation
 }
