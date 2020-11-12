@@ -1,100 +1,28 @@
 const express = require('express')
 const router = express.Router()
-const { check, validationResult } = require('express-validator')
-const bcrypt = require('bcryptjs')
-const config = require('config')
-const jwt = require('jsonwebtoken')
 
+// Middleware
 const auth = require('../../middleware/auth')
 
-const User = require('../../models/User')
+// Controller
+const { authenticateUser, login } = require('../../controllers/auth')
+
+// Validator
+const { loginValidator } = require('../../validators/auth')
 
 /**
  * @route GET api/user/auth
  * @desc  User authentication
  * @access  Private
  */
-router.get('/', auth, async (req, res) => {
-  try {
-    // Select user data except password
-    const user = await User.findById(req.user.id).select('-password')
-    res.json(user)
-  } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
-  }
-})
+router.get('/', auth, authenticateUser)
 
 /**
  * @route POST api/user/auth
  * @desc  Authenticate user & get token (Login)
  * @access  Public
  */
-router.post(
-  '/',
-  [
-    check('email', 'Please enter a valid email.').not().isEmpty(),
-    check('password', 'Password is required.').exists()
-  ],
-  async (req, res) => {
-    const errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-      return res
-        .status(400)
-        .json({ errors: errors.array() })
-    }
-
-    const { email, password } = req.body
-
-    try {
-      let user = await User.findOne({ email })
-
-      if (!user) {
-        return res
-          .status(400)
-          .json({
-            errors: [{
-              msg: 'Invalid Credentials.'
-            }]
-          })
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password)
-
-      if (!isMatch) {
-        return res
-          .status(400)
-          .json({
-            errors: [{
-              msg: 'Invalid Credentials.'
-            }]
-          })
-      }
-
-      const payload = {
-        user: {
-          id: user._id
-        }
-      }
-
-      jwt.sign(
-        payload,
-        config.get('jwtToken'),
-        { expiresIn: 360000 },
-        (error, token) => {
-          if (error) throw error
-          res.json({ token })
-        }
-      )
-    } catch (error) {
-      res.status(500).send({
-        msg: 'Server Error.'
-      })
-    }
-  }
-)
+router.post('/', loginValidator, login)
 
 
 module.exports = router
