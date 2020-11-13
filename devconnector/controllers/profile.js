@@ -243,6 +243,25 @@ const deleteExperience = async (req, res) => {
   }
 }
 
+const deleteEducation = async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id })
+
+    // Get remove index
+    const removeIndex = profile.education
+      .map(item => item.id)
+      .indexOf(req.params.edu_id)
+    profile.education.splice(removeIndex, 1)
+
+    await profile.save()
+    res.json(profile)
+  } catch (error) {
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+}
+
 module.exports = {
   getCurrentUserProfile,
   createProfile,
@@ -250,5 +269,6 @@ module.exports = {
   getProfileByUserId,
   updateExperience,
   updateEducation,
-  deleteExperience
+  deleteExperience,
+  deleteEducation
 }
