@@ -11,7 +11,8 @@ const {
   getProfiles,
   getProfileByUserId,
   updateExperience,
-  updateEducation
+  updateEducation,
+  deleteExperience
 } = require('../../controllers/profile')
 
 // Validator
@@ -69,6 +70,17 @@ router.patch(
   '/update/education',
   updateEducationValidator,
   updateEducation
+)
+
+/**
+ * @route DELETE api/profile/delete/experience/:exp_id
+ * @desc Delete experience from profile
+ * @access Private
+ */
+router.delete(
+  '/delete/experience/:exp_id',
+  auth,
+  deleteExperience
 )
 
 module.exports = router
