@@ -1,4 +1,6 @@
 const { validationResult } = require('express-validator')
+const axios = require('axios')
+const config = require('config')
 
 const Profile = require('../models/Profile')
 
@@ -262,6 +264,30 @@ const deleteEducation = async (req, res) => {
   }
 }
 
+const getGitHubProfile = async (req, res) => {
+  try {
+    const uri = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
+    const options = {
+      headers: { 'user-agent': 'node.js' },
+      client_id: config.get('githubClientId'),
+      client_secret: config.get('githubSecret')
+    }
+    const gitHubResponse = await axios.get(uri, options)
+
+    if (gitHubResponse.status !== 200) {
+      return res
+        .status(404)
+        .json({ msg: 'No GitHub profile found.' })
+    }
+
+    res.json(gitHubResponse.data)
+  } catch (error) {
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+}
+
 module.exports = {
   getCurrentUserProfile,
   createProfile,
@@ -270,5 +296,6 @@ module.exports = {
   updateExperience,
   updateEducation,
   deleteExperience,
-  deleteEducation
+  deleteEducation,
+  getGitHubProfile
 }
