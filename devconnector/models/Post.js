@@ -13,8 +13,12 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  author: {
+    type: String,
+    required: true
+  },
   tags: {
-    type: String
+    type: [String]
   },
   avatar: {
     type: String
