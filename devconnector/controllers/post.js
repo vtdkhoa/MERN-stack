@@ -40,6 +40,21 @@ const createPost = async (req, res) => {
   }
 }
 
+const getPosts = async (req, res) => {
+  try {
+    const posts = await Post
+      .find()
+      .sort({ date: -1 })
+
+    res.json(posts)
+  } catch (error) {
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+}
+
 module.exports = {
-  createPost
+  createPost,
+  getPosts
 }
