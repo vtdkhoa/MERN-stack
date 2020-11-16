@@ -13,7 +13,8 @@ const {
   updateExperience,
   updateEducation,
   deleteExperience,
-  deleteEducation
+  deleteEducation,
+  getGitHubProfile
 } = require('../../controllers/profile')
 
 // Validator
@@ -94,5 +95,12 @@ router.delete(
   auth,
   deleteEducation
 )
+
+/**
+ * @route GET api/profile/github/:username
+ * @desc  Get user repos from github
+ * @access  Public
+ */
+router.get('/github/:username', getGitHubProfile)
 
 module.exports = router

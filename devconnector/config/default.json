@@ -1,4 +1,6 @@
 {
   "mongoURI": "mongodb+srv://khoavo:1907@devconnector.mnsgr.mongodb.net/DevConnector?retryWrites=true&w=majority",
-  "jwtToken": "secret_token"
+  "jwtToken": "secret_token",
+  "githubClientId": "c3c966b846e47e36d189",
+  "githubSecret": "8d637c77e2fcfcdfe22142d6ab10b184268cf9c8"
 }
