@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator')
-const request = require('request')
+const axios = require('axios')
 const config = require('config')
 
 const Profile = require('../models/Profile')
@@ -264,32 +264,23 @@ const deleteEducation = async (req, res) => {
   }
 }
 
-const getGitHubProfile = (req, res) => {
+const getGitHubProfile = async (req, res) => {
   try {
+    const uri = `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
     const options = {
       headers: { 'user-agent': 'node.js' },
-      method: 'GET',
-      uri: `https://api.github.com/users/${req.params.username}/repos
-        ?per_page=5
-        &sort=created:asc
-        &client_id=${config.get('githubClientId')}
-        &client_secret=${config.get('githubSecret')}
-      `
+      client_id: config.get('githubClientId'),
+      client_secret: config.get('githubSecret')
+    }
+    const gitHubResponse = await axios.get(uri, options)
+
+    if (gitHubResponse.status !== 200) {
+      return res
+        .status(404)
+        .json({ msg: 'No GitHub profile found.' })
     }
 
-    request(options, (error, response, body) => {
-      if (error) console.error(error)
-
-      if (response.statusCode !== 200) {
-        return res
-          .status(404)
-          .json({
-            msg: 'No GitHub profile found.'
-          })
-      }
-
-      res.json(JSON.parse(body))
-    })
+    res.json(gitHubResponse.data)
   } catch (error) {
     res.status(500).send({
       msg: 'Server Error.'
