@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-// Middleware
-const auth = require('../../middleware/auth')
-
 // Controller
 const { createPost, getPosts } = require('../../controllers/post')
 
