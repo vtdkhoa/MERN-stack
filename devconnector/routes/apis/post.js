@@ -2,7 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 // Controller
-const { createPost, getPosts } = require('../../controllers/post')
+const {
+  createPost,
+  getPosts,
+  getPostById
+} = require('../../controllers/post')
 
 // Validator
 const { createPostValidator } = require('../../validators/post')
@@ -20,5 +24,12 @@ router.post('/', createPostValidator, createPost)
  * @access  Public
  */
 router.get('/', getPosts)
+
+/**
+ * @route GET api/post/:post_id
+ * @desc  Get a single post
+ * @access  Public
+ */
+router.get('/:post_id', getPostById)
 
 module.exports = router
