@@ -3,6 +3,7 @@ const gravatar = require('gravatar')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const chalk = require('chalk')
 
 const User = require('../models/User')
 const Profile = require('../models/Profile')
@@ -59,9 +60,8 @@ const registerUser = async (req, res) => {
       }
     )
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -75,9 +75,8 @@ const deleteUser = async (req, res) => {
 
     res.json({ msg: 'User deleted.' })
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 

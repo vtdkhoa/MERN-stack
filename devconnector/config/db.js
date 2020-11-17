@@ -14,7 +14,7 @@ const connectDB = async () => {
     })
     console.log(chalk.bgBlue('MongoDB Connected...'))
   } catch (error) {
-    console.log(chalk.bgRedBright(error.message))
+    console.log(chalk.redBright(error.message))
     // Exit process with failure
     process.exit(1)
   }
