@@ -54,7 +54,32 @@ const getPosts = async (req, res) => {
   }
 }
 
+const getPostById = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id)
+
+    if (!post) {
+      return res
+        .status(400)
+        .json({ msg: 'No post found.' })
+    }
+
+    res.json(post)
+  } catch (error) {
+    if (error.kind === 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'Post not found.' })
+    }
+
+    res.status(500).send({
+      msg: 'Server Error.'
+    })
+  }
+}
+
 module.exports = {
   createPost,
-  getPosts
+  getPosts,
+  getPostById
 }
