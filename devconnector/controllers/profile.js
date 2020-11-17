@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const axios = require('axios')
 const config = require('config')
+const chalk = require('chalk')
 
 const Profile = require('../models/Profile')
 
@@ -13,16 +14,13 @@ const getCurrentUserProfile = async (req, res) => {
     if (!profile) {
       return res
         .status(400)
-        .json({
-          msg: 'There is no profile for this user.'
-        })
+        .json({ msg: 'There is no profile for this user.' })
     }
 
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -36,21 +34,11 @@ const createProfile = async (req, res) => {
   }
 
   const {
-    company,
-    website,
-    location,
-    status,
-    skills,
-    bio,
-    githubProfile,
-    experience,
-    education,
-    youtube,
-    twitter,
-    facebook,
-    linkedin,
-    instagram,
-    devto
+    company, website, location,
+    status, skills, bio,
+    githubProfile, experience,
+    education, youtube, twitter,
+    facebook, linkedin, instagram, devto
   } = req.body
 
   // Build profile object
@@ -96,9 +84,8 @@ const createProfile = async (req, res) => {
     await profile.save()
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -110,9 +97,8 @@ const getProfiles = async (req, res) => {
 
     res.json(profiles)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -125,24 +111,20 @@ const getProfileByUserId = async (req, res) => {
     if (!profile) {
       return res
         .status(400)
-        .json({
-          msg: 'Profile not found.'
-        })
+        .json({ msg: 'Profile not found.' })
     }
 
     res.json(profile)
   } catch (error) {
+    console.log(chalk.redBright(error.message))
+
     if (error.kind === 'ObjectId') {
       return res
         .status(400)
-        .json({
-          msg: 'Profile not found.'
-        })
+        .json({ msg: 'Profile not found.' })
     }
 
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -180,9 +162,8 @@ const updateExperience = async (req, res) => {
 
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -220,9 +201,8 @@ const updateEducation = async (req, res) => {
 
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -239,9 +219,8 @@ const deleteExperience = async (req, res) => {
     await profile.save()
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -258,9 +237,8 @@ const deleteEducation = async (req, res) => {
     await profile.save()
     res.json(profile)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -282,9 +260,8 @@ const getGitHubProfile = async (req, res) => {
 
     res.json(gitHubResponse.data)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 

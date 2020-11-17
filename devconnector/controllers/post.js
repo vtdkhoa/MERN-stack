@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator')
+const chalk = require('chalk')
 
 const User = require('../models/User')
 const Post = require('../models/Post')
@@ -34,23 +35,18 @@ const createPost = async (req, res) => {
 
     res.json(post)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
 const getPosts = async (req, res) => {
   try {
-    const posts = await Post
-      .find()
-      .sort({ date: -1 })
-
+    const posts = await Post.find().sort({ date: -1 })
     res.json(posts)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -66,15 +62,15 @@ const getPostById = async (req, res) => {
 
     res.json(post)
   } catch (error) {
+    console.log(chalk.redBright(error.message))
+
     if (error.kind === 'ObjectId') {
       return res
         .status(400)
         .json({ msg: 'Post not found.' })
     }
 
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
