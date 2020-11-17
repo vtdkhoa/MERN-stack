@@ -1,4 +1,6 @@
 const express = require('express')
+const xss = require('xss-clean')
+const mongoSanitize = require('express-mongo-sanitize')
 const chalk = require('chalk')
 
 const connectDB = require('./config/db')
@@ -16,6 +18,8 @@ connectDB()
 
 // Initialize Middleware
 app.use(express.json({ extended: true }))
+app.use(mongoSanitize())
+app.use(xss())
 
 app.get('/', (req, res) => {
   res.send('API Server, start!')

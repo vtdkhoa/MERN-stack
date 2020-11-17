@@ -70,7 +70,12 @@ const login = async (req, res) => {
     )
   } catch (error) {
     console.log(chalk.redBright(error.message))
-    res.status(500).send({ msg: 'Server Error.' })
+
+    if (error.message) {
+      res.status(400).send({ msg: 'Invalid Credentials.' })
+    } else {
+      res.status(500).send({ msg: 'Server Error.' })
+    }
   }
 }
 
