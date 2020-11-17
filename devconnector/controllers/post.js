@@ -50,14 +50,14 @@ const getPosts = async (req, res) => {
   }
 }
 
-const getPostById = async (req, res) => {
+const getPost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.post_id)
+    const post = await Post.findById(req.params.id)
 
     if (!post) {
       return res
-        .status(400)
-        .json({ msg: 'No post found.' })
+        .status(404)
+        .json({ msg: 'Post not found.' })
     }
 
     res.json(post)
@@ -74,8 +74,35 @@ const getPostById = async (req, res) => {
   }
 }
 
+const deletePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    // Check user
+    if (post.user.toString() !== req.user.id) {
+      return res
+        .status(401)
+        .json({ msg: 'User not authorized.' })
+    }
+
+    await post.remove()
+    res.json({ msg: 'Post has been deleted.' })
+  } catch (error) {
+    console.log(chalk.redBright(error.message))
+
+    if (error.kind === 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'Post not found.' })
+    }
+
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
-  getPostById
+  getPost,
+  deletePost
 }
