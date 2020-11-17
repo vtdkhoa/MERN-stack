@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const config = require('config')
 const jwt = require('jsonwebtoken')
+const chalk = require('chalk')
 
 const User = require('../models/User')
 
@@ -11,9 +12,8 @@ const authenticateUser = async (req, res) => {
     const user = await User.findById(req.user.id).select('-password')
     res.json(user)
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
@@ -69,9 +69,8 @@ const login = async (req, res) => {
       }
     )
   } catch (error) {
-    res.status(500).send({
-      msg: 'Server Error.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
   }
 }
 
