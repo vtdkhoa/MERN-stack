@@ -1,11 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
+// Middleware
+const auth = require('../../middleware/auth')
+
 // Controller
 const {
   createPost,
   getPosts,
-  getPostById
+  getPost,
+  deletePost
 } = require('../../controllers/post')
 
 // Validator
@@ -26,10 +30,17 @@ router.post('/', createPostValidator, createPost)
 router.get('/', getPosts)
 
 /**
- * @route GET api/post/:post_id
- * @desc  Get a single post
+ * @route GET api/post/:id
+ * @desc  Get a post
  * @access  Public
  */
-router.get('/:post_id', getPostById)
+router.get('/:id', getPost)
+
+/**
+ * @route DELETE api/post/:id
+ * @desc  Delete a post
+ * @access  Private
+ */
+router.delete('/:id', auth, deletePost)
 
 module.exports = router

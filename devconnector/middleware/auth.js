@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const chalk = require('chalk')
 
 module.exports = function(req, res, next) {
   // Get token from header
@@ -9,9 +10,7 @@ module.exports = function(req, res, next) {
   if (!token) {
     return res
       .status(401)
-      .json({
-        msg: 'No token, authorization denied.'
-      })
+      .json({ msg: 'No token, authorization denied.' })
   }
 
   // Verify token
@@ -20,8 +19,7 @@ module.exports = function(req, res, next) {
     req.user = decoded.user // user object from payload
     next()
   } catch (error) {
-    res.status(401).json({
-      msg: 'Token is not valid.'
-    })
+    console.log(chalk.redBright(error.message))
+    res.status(401).json({ msg: 'Token is not valid.' })
   }
 }
