@@ -12,7 +12,8 @@ const {
   deletePost,
   getMyPosts,
   likePost,
-  commentPost
+  commentPost,
+  removeComment
 } = require('../../controllers/post')
 
 // Validator
@@ -73,5 +74,12 @@ router.patch(
   commentPostValidator,
   commentPost
 )
+
+/**
+ * @route DELETE api/post/comment/:id/:comment_id
+ * @desc  Remove a comment from post
+ * @access  Private
+ */
+router.delete('/comment/:id/:comment_id', auth, removeComment)
 
 module.exports = router

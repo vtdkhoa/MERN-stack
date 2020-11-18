@@ -169,6 +169,42 @@ const commentPost = async (req, res) => {
   }
 }
 
+const removeComment = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+
+    // Pull out comment
+    const comment = post.comments.find(cmt => {
+      return cmt.id === req.params.comment_id
+    })
+
+    // Check comment exists or not
+    if (!comment) {
+      return res
+        .status(404)
+        .json({ msg: 'Comment does not exist.' })
+    }
+
+    // Check user
+    if (comment.user.toString() !== req.user.id) {
+      return res
+        .status(401)
+        .json({ msg: 'User not authorized.' })
+    }
+
+    // Remove comment
+    post.comments = post.comments.filter(({ id }) => {
+      return id !== req.params.comment_id
+    })
+
+    await post.save()
+    res.json(post.comments)
+  } catch (error) {
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -176,5 +212,6 @@ module.exports = {
   deletePost,
   getMyPosts,
   likePost,
-  commentPost
+  commentPost,
+  removeComment
 }
