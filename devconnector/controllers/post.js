@@ -100,9 +100,27 @@ const deletePost = async (req, res) => {
   }
 }
 
+const getMyPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ user: req.user.id })
+
+    if (!posts) {
+      return res
+        .status(204)
+        .json({ msg: 'Have No Post.' })
+    }
+
+    res.json(posts)
+  } catch (error) {
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
   getPost,
-  deletePost
+  deletePost,
+  getMyPosts
 }
