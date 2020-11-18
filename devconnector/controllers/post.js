@@ -133,8 +133,36 @@ const likePost = async (req, res) => {
 
     post.likes.unshift({ user: req.user.id })
     await post.save()
-
     res.json(post.likes)
+  } catch (error) {
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+const commentPost = async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(400)
+      .json({ errors: errors.array() })
+  }
+
+  try {
+    const user = await User.findById(req.user.id).select('-password')
+    const post = await Post.findById(req.params.id)
+
+    const newComment = {
+      text: req.body.text,
+      name: user.name,
+      avatar: user.avatar,
+      user: req.user.id
+    }
+
+    post.comments.unshift(newComment)
+    await post.save()
+    res.json(post.comments)
   } catch (error) {
     console.log(chalk.redBright(error.message))
     res.status(500).send({ msg: 'Server Error.' })
@@ -147,5 +175,6 @@ module.exports = {
   getPost,
   deletePost,
   getMyPosts,
-  likePost
+  likePost,
+  commentPost
 }

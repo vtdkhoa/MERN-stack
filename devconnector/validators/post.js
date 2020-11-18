@@ -11,6 +11,14 @@ const createPostValidator = [
   ]
 ]
 
+const commentPostValidator = [
+  auth,
+  [
+    check('text', 'Comment text is required.').not().isEmpty()
+  ]
+]
+
 module.exports = {
-  createPostValidator
+  createPostValidator,
+  commentPostValidator
 }
