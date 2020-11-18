@@ -23,11 +23,11 @@ const { createPostValidator } = require('../../validators/post')
 router.post('/', createPostValidator, createPost)
 
 /**
- * @route GET api/post
+ * @route GET api/post/all
  * @desc  Get all posts
  * @access  Public
  */
-router.get('/', getPosts)
+router.get('/all', getPosts)
 
 /**
  * @route GET api/post/:id
