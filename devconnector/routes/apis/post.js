@@ -9,7 +9,8 @@ const {
   createPost,
   getPosts,
   getPost,
-  deletePost
+  deletePost,
+  getMyPosts
 } = require('../../controllers/post')
 
 // Validator
@@ -42,5 +43,12 @@ router.get('/:id', getPost)
  * @access  Private
  */
 router.delete('/:id', auth, deletePost)
+
+/**
+ * @route GET api/post
+ * @desc  Get user's posts
+ * @access  Private
+ */
+router.get('/', auth, getMyPosts)
 
 module.exports = router
