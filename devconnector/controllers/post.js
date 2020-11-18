@@ -117,10 +117,35 @@ const getMyPosts = async (req, res) => {
   }
 }
 
+const likePost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+    const amountLikes = post.likes.filter(like => {
+      return like.user.toString() === req.user.id
+    })
+
+    // Check if the post has already been liked
+    if (amountLikes.length > 0) {
+      return res
+        .status(400)
+        .json({ msg: 'Post already liked.' })
+    }
+
+    post.likes.unshift({ user: req.user.id })
+    await post.save()
+
+    res.json(post.likes)
+  } catch (error) {
+    console.log(chalk.redBright(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
   getPost,
   deletePost,
-  getMyPosts
+  getMyPosts,
+  likePost
 }
