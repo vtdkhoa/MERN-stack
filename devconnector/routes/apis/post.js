@@ -11,11 +11,15 @@ const {
   getPost,
   deletePost,
   getMyPosts,
-  likePost
+  likePost,
+  commentPost
 } = require('../../controllers/post')
 
 // Validator
-const { createPostValidator } = require('../../validators/post')
+const {
+  createPostValidator,
+  commentPostValidator
+} = require('../../validators/post')
 
 /**
  * @route POST api/post
@@ -58,5 +62,16 @@ router.get('/', auth, getMyPosts)
  * @access  Private
  */
 router.patch('/like/:id', auth, likePost)
+
+/**
+ * @route PATCH api/post/comment/:id
+ * @desc  Comment a post
+ * @access  Private
+ */
+router.patch(
+  '/comment/:id',
+  commentPostValidator,
+  commentPost
+)
 
 module.exports = router
