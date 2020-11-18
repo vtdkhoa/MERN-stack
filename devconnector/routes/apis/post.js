@@ -10,7 +10,8 @@ const {
   getPosts,
   getPost,
   deletePost,
-  getMyPosts
+  getMyPosts,
+  likePost
 } = require('../../controllers/post')
 
 // Validator
@@ -50,5 +51,12 @@ router.delete('/:id', auth, deletePost)
  * @access  Private
  */
 router.get('/', auth, getMyPosts)
+
+/**
+ * @route PATCH api/post/like/:id
+ * @desc  Like a post
+ * @access  Private
+ */
+router.patch('/like/:id', auth, likePost)
 
 module.exports = router
