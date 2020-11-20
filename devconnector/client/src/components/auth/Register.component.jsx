@@ -9,10 +9,20 @@ const Register = () => {
     passwordcfm: ''
   })
   const { name, email, password, passwordcfm } = formData
+
   const onChange = event => setFormData({
     ...formData,
     [event.target.name]: event.target.value
   })
+
+  const onSubmit = event => {
+    event.preventDefault()
+    if (password !== passwordcfm) {
+      console.log('Password confirm does not match.')
+    } else {
+      console.log(formData)
+    }
+  }
 
   return (
     <Fragment>
@@ -20,14 +30,14 @@ const Register = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
       </p>
-      <form className="form">
+      <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <input
             type="text"
             placeholder="Name"
             name="name"
             value={name}
-            onChange={event => onChange(event)}
+            onChange={onChange}
             required
           />
         </div>
@@ -37,7 +47,7 @@ const Register = () => {
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={event => onChange(event)}
+            onChange={onChange}
             required
           />
           <small className="form-text">
@@ -51,7 +61,7 @@ const Register = () => {
             name="password"
             minLength="6"
             value={password}
-            onChange={event => onChange(event)}
+            onChange={onChange}
             required
           />
         </div>
@@ -62,7 +72,7 @@ const Register = () => {
             name="passwordcfm"
             minLength="6"
             value={passwordcfm}
-            onChange={event => onChange(event)}
+            onChange={onChange}
             required
           />
         </div>

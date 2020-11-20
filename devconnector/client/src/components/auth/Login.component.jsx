@@ -2,8 +2,21 @@ import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
+  const { email, password } = formData
+
+  const onChange = event => setFormData({
+    ...formData,
+    [event.target.name]: event.target.value
+  })
+
+  const onSubmit = event => {
+    event.preventDefault()
+    console.log(formData)
+  }
 
   return (
     <Fragment>
@@ -14,14 +27,14 @@ const Login = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Sign into Your Account
       </p>
-      <form className="form">
+      <form className="form" onSubmit={onSubmit}>
         <div className="form-group">
           <input
             type="email"
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={event => setEmail(event.target.value)}
+            onChange={onChange}
             required
           />
         </div>
@@ -31,7 +44,7 @@ const Login = () => {
             placeholder="Password"
             name="password"
             value={password}
-            onChange={event => setPassword(event.target.value)}
+            onChange={onChange}
             required
           />
         </div>
