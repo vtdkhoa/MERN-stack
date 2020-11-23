@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const xss = require('xss-clean')
 const mongoSanitize = require('express-mongo-sanitize')
 const chalk = require('chalk')
@@ -18,6 +19,7 @@ connectDB()
 
 // Initialize Middleware
 app.use(express.json({ extended: true }))
+app.use(cors())
 app.use(mongoSanitize())
 app.use(xss())
 
