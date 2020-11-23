@@ -2,9 +2,10 @@ import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { setAlert } from '../../actions/alert'
+import { register } from '../../actions/auth'
 import PropTypes from 'prop-types'
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,7 +24,7 @@ const Register = ({ setAlert }) => {
     if (password !== passwordcfm) {
       setAlert('Passwords does not match.', 'danger')
     } else {
-      console.log(formData)
+      register({ name, email, password })
     }
   }
 
@@ -41,7 +42,6 @@ const Register = ({ setAlert }) => {
             name="name"
             value={name}
             onChange={onChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -51,7 +51,6 @@ const Register = ({ setAlert }) => {
             name="email"
             value={email}
             onChange={onChange}
-            required
           />
           <small className="form-text">
             This site uses Gravatar so if you want a profile image, use a Gravatar email
@@ -62,10 +61,8 @@ const Register = ({ setAlert }) => {
             type="password"
             placeholder="Password"
             name="password"
-            minLength="6"
             value={password}
             onChange={onChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -73,10 +70,8 @@ const Register = ({ setAlert }) => {
             type="password"
             placeholder="Confirm Password"
             name="passwordcfm"
-            minLength="6"
             value={passwordcfm}
             onChange={onChange}
-            required
           />
         </div>
         <button type="submit" className="btn btn-primary">Register</button>
@@ -90,12 +85,16 @@ const Register = ({ setAlert }) => {
 }
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setAlert: (message, alertType) => dispatch(setAlert(message, alertType))
+    setAlert: (message, alertType) => dispatch(setAlert(message, alertType)),
+    register: ({ name, email, password }) => dispatch(
+      register({ name, email, password })
+    )
   }
 }
 
