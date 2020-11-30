@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { login } from '../../actions/auth'
+import PropTypes from 'prop-types'
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -15,14 +18,11 @@ const Login = () => {
 
   const onSubmit = event => {
     event.preventDefault()
-    console.log(formData)
+    login(email, password)
   }
 
   return (
     <Fragment>
-      <div className="alert alert-danger">
-        Invalid credentials
-      </div>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Sign into Your Account
@@ -35,7 +35,6 @@ const Login = () => {
             name="email"
             value={email}
             onChange={onChange}
-            required
           />
         </div>
         <div className="form-group">
@@ -45,7 +44,6 @@ const Login = () => {
             name="password"
             value={password}
             onChange={onChange}
-            required
           />
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
@@ -58,4 +56,17 @@ const Login = () => {
   )
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (email, password) => dispatch(login(email, password))
+  }
+}
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login)

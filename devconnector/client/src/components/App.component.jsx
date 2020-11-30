@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { loadUser } from '../actions/auth'
 import setAuthToken from '../utils/setAuthToken'
+import PropTypes from 'prop-types'
 import Navbar from './layouts/Navbar.component'
 import Landing from './layouts/Landing.component'
 import Register from './auth/Register.component'
@@ -40,6 +41,10 @@ const mapDispatchToProps = dispatch => {
   return {
     loadUser: () => dispatch(loadUser())
   }
+}
+
+App.propTypes = {
+  loadUser: PropTypes.func.isRequired
 }
 
 export default connect(
