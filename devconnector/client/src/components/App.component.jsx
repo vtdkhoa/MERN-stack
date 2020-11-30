@@ -10,6 +10,7 @@ import Register from './auth/Register.component'
 import Login from './auth/Login.component'
 import Alert from './layouts/Alert.component'
 import Dashboard from './pages/dashboard/Dashboard.component'
+import PrivateRoute from './routing/PrivateRoute.component'
 import './App.css'
 
 const App = ({ loadUser }) => {
@@ -31,8 +32,7 @@ const App = ({ loadUser }) => {
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            {/* Scratch: Test for redirect after logged in & signed up */}
-            <Route path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
           </Switch>
         </section>
       </Fragment>
