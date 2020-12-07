@@ -11,7 +11,7 @@ import Login from './auth/Login.component'
 import Alert from './layouts/Alert.component'
 import Dashboard from './pages/dashboard/Dashboard.component'
 import PrivateRoute from './routing/PrivateRoute.component'
-import './App.css'
+import './App.style.css'
 
 const App = ({ loadUser }) => {
   useEffect(() => {
