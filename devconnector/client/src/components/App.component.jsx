@@ -10,6 +10,7 @@ import Register from './auth/Register.component'
 import Login from './auth/Login.component'
 import Alert from './layouts/Alert.component'
 import Dashboard from './pages/dashboard/Dashboard.component'
+import ProfileForm from './pages/profile-forms/ProfileForm.component'
 import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
@@ -33,6 +34,7 @@ const App = ({ loadUser }) => {
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/create-profile" component={ProfileForm} />
           </Switch>
         </section>
       </Fragment>
