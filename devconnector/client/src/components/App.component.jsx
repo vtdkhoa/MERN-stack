@@ -21,7 +21,7 @@ const App = ({ loadUser }) => {
     }
 
     loadUser()
-  }, [])
+  }, [loadUser])
 
   return (
     <Router>
