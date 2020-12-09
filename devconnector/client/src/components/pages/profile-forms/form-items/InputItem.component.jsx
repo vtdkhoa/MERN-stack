@@ -8,7 +8,7 @@ const InputItem = ({ name, value, placeholder, onChange, text }) => {
         type="text"
         placeholder={placeholder || capitilize(name)}
         name={name}
-        vaue={value}
+        value={value}
         onChange={onChange}
       />
       { text && <small className="form-text">{text}</small> }

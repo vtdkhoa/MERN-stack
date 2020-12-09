@@ -35,6 +35,7 @@ const App = ({ loadUser }) => {
             <Route path="/login" component={Login} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/create-profile" component={ProfileForm} />
+            <PrivateRoute path="/edit-profile" component={ProfileForm} />
           </Switch>
         </section>
       </Fragment>

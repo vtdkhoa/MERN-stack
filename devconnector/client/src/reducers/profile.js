@@ -14,13 +14,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentProfile: action.payload,
-        loading: false
+        loading: false,
+        error: null
       }
     case PROFILE_ERROR:
       return {
         ...state,
         error: action.payload,
-        loading: false
+        loading: false,
+        profile: null
       }
     case CLEAR_PROFILE:
       return {
