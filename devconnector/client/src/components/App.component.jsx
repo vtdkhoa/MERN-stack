@@ -11,6 +11,8 @@ import Login from './auth/Login.component'
 import Alert from './layouts/Alert.component'
 import Dashboard from './pages/dashboard/Dashboard.component'
 import ProfileForm from './pages/profile-forms/ProfileForm.component'
+import ExperienceForm from './pages/profile-forms/ExperienceForm.component'
+import EducationForm from './pages/profile-forms/EducationForm.component'
 import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
@@ -36,6 +38,8 @@ const App = ({ loadUser }) => {
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/create-profile" component={ProfileForm} />
             <PrivateRoute path="/edit-profile" component={ProfileForm} />
+            <PrivateRoute path="/add-experience" component={ExperienceForm} />
+            <PrivateRoute path="/add-education" component={EducationForm} />
           </Switch>
         </section>
       </Fragment>
