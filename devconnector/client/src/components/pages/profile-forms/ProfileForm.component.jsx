@@ -1,29 +1,62 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { createProfile } from '../../../actions/profile'
+import { createProfile, getCurrentProfile } from '../../../actions/profile'
 import PropTypes from 'prop-types'
 import SelectItem from './form-items/SelectItem.component'
 import InputItem from './form-items/InputItem.component'
 import SocialItem from './form-items/SocialItem.component'
 
-function ProfileForm({ createProfile, history }) {
+const initialState = {
+  company: '',
+  website: '',
+  location: '',
+  status: '',
+  skills: '',
+  bio: '',
+  githubProfile: '',
+  youtube: '',
+  twitter: '',
+  facebook: '',
+  linkedin: '',
+  instagram: '',
+  devto: ''
+}
+
+function ProfileForm({
+  createProfile,
+  getProfile,
+  profile: { currentProfile, loading },
+  history
+}) {
+  const [formData, setFormData] = useState(initialState)
   const [displaySocial, toggleSocial] = useState(false)
-  const [formData, setFormData] = useState({
-    company: '',
-    website: '',
-    location: '',
-    status: '',
-    skills: '',
-    bio: '',
-    githubProfile: '',
-    youtube: '',
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    instagram: '',
-    devto: ''
-  })
+
+  useEffect(() => {
+    if (!currentProfile) {
+      getProfile()
+    }
+
+    if (!loading && currentProfile) {
+      const profileData = {...initialState}
+      for (const key in currentProfile) {
+        if (key in profileData) {
+          profileData[key] = currentProfile[key]
+        }
+      }
+
+      for (const key in currentProfile.social) {
+        if (key in profileData) {
+          profileData[key] = currentProfile.social[key]
+        }
+      }
+
+      if (Array.isArray(profileData.skills)) {
+        profileData.skills = profileData.skills.join(', ')
+      }
+      setFormData(profileData)
+    }
+  }, [loading, getProfile, currentProfile])
 
   const {
     company,
@@ -48,7 +81,7 @@ function ProfileForm({ createProfile, history }) {
 
   const onFormSubmit = event => {
     event.preventDefault()
-    createProfile(formData, history)
+    createProfile(formData, history, currentProfile ? true : false)
   }
 
   const options = [
@@ -149,16 +182,27 @@ function ProfileForm({ createProfile, history }) {
 }
 
 ProfileForm.propTypes = {
-  createProfile: PropTypes.func.isRequired
+  createProfile: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => {
+  return {
+    profile: state.profile
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProfile: (formData, history) => dispatch(createProfile(formData, history))
+    createProfile: (formData, history, edit) => dispatch(
+      createProfile(formData, history, edit)
+    ),
+    getProfile: () => dispatch(getCurrentProfile())
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withRouter(ProfileForm))
