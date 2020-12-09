@@ -24,14 +24,8 @@ export const getCurrentProfile = () => async dispatch => {
 
 // Create or Update profile
 export const createProfile = (formData, history, edit = false) => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-
   try {
-    const response = await api.post('/profile', formData, config)
+    const response = await api.post('/profile', formData)
 
     dispatch({
       type: GET_PROFILE,
