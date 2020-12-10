@@ -5,6 +5,7 @@ import { getCurrentProfile } from '../../../actions/profile'
 import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import DashboardActions from './DashboardActions.component'
+import ExperienceCredentials from './ExperienceCredentials.component'
 
 function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, loading } }) {
   useEffect(() => {
@@ -25,6 +26,7 @@ function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, load
         currentProfile !== null ? (
           <Fragment>
             <DashboardActions />
+            <ExperienceCredentials experience={currentProfile.experience} />
             <div className="my-2">
               <button className="btn btn-danger">
                 <i className="fas fa-minus-circle"></i> Delete my account
