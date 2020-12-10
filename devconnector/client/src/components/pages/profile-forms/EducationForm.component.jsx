@@ -1,8 +1,11 @@
 import React, { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
+import { addEducation } from '../../../actions/profile'
+import PropTypes from 'prop-types'
 import InputItem from './form-items/InputItem.component'
 
-const EducationForm = () => {
+const EducationForm = ({ addEducation, history }) => {
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -20,6 +23,7 @@ const EducationForm = () => {
 
   const onFormSubmit = event => {
     event.preventDefault()
+    addEducation(formData, history)
   }
 
   const {
@@ -112,4 +116,19 @@ const EducationForm = () => {
   )
 }
 
-export default EducationForm
+EducationForm.propTypes = {
+  addEducation: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addEducation: (formData, history) => dispatch(
+      addEducation(formData, history)
+    )
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withRouter(EducationForm))
