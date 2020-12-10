@@ -16,7 +16,7 @@ const ExperienceCredentials = ({ experience }) => {
 
   return (
     <Fragment>
-      <h2 class="my-2">Experience Credentials</h2>
+      <h2 className="my-2">Experience Credentials</h2>
       <table className="table">
         <thead>
           <tr>
