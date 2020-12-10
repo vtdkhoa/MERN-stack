@@ -9,7 +9,7 @@ import DashboardActions from './DashboardActions.component'
 function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, loading } }) {
   useEffect(() => {
     getProfile()
-  }, [])
+  }, [getProfile])
 
   if (loading && currentProfile === null) {
     return <Spinner />
