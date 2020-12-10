@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import DashboardActions from './DashboardActions.component'
 import ExperienceCredentials from './ExperienceCredentials.component'
+import EducationCredentials from './EducationCredentials.component'
 
 function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, loading } }) {
   useEffect(() => {
@@ -27,6 +28,7 @@ function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, load
           <Fragment>
             <DashboardActions />
             <ExperienceCredentials experience={currentProfile.experience} />
+            <EducationCredentials education={currentProfile.education} />
             <div className="my-2">
               <button className="btn btn-danger">
                 <i className="fas fa-minus-circle"></i> Delete my account
