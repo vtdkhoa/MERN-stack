@@ -3,6 +3,18 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 
 const EducationCredentials = ({ education }) => {
+  if (education.length <= 0) {
+    return (
+      <Fragment>
+        <h2 className="my-2">Education Credentials</h2>
+        <h4 className="text-primary">
+          You have no background education. Please add your background education,&nbsp;
+          if you have been or still learning at somewhere.
+        </h4>
+      </Fragment>
+    )
+  }
+
   const renderEducation = education.map(edu => (
     <tr key={edu._id}>
       <td className="hide-sm">{edu.school}</td>
