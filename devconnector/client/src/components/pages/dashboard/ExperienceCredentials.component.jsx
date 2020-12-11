@@ -3,6 +3,17 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 
 const ExperienceCredentials = ({ experience }) => {
+  if (experience.length <= 0) {
+    return (
+      <Fragment>
+        <h2 className="my-2">Experience Credentials</h2>
+        <h4 className="text-primary">
+          You have no experience. Please add your experiences, if you have been or still working at somewhere.
+        </h4>
+      </Fragment>
+    )
+  }
+
   const renderExperience = experience.map(exp => (
     <tr key={exp._id}>
       <td className="hide-sm">{exp.company}</td>
