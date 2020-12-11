@@ -1,8 +1,9 @@
 import {
   GET_PROFILE,
+  GET_PROFILES,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
 } from '../actions/types'
 
 const initialState = {
@@ -22,6 +23,12 @@ export default (state = initialState, action) => {
         currentProfile: action.payload,
         loading: false,
         error: null
+      }
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: action.payload,
+        loading: false
       }
     case PROFILE_ERROR:
       return {

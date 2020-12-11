@@ -1,6 +1,12 @@
 import api from '../api'
 import { setAlert } from './alert'
-import { GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE } from './types'
+import {
+  CLEAR_PROFILE,
+  GET_PROFILE,
+  GET_PROFILES,
+  PROFILE_ERROR,
+  UPDATE_PROFILE
+} from './types'
 
 // Get current users profile
 export const getCurrentProfile = () => async dispatch => {
@@ -111,6 +117,28 @@ export const addEducation = (formData, history) => async dispatch => {
       })
     }
 
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Get all profiles
+export const getProfiles = () => async dispatch => {
+  dispatch({ type: CLEAR_PROFILE })
+
+  try {
+    const response = await api.get('/profile')
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: response.data
+    })
+  } catch (error) {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
