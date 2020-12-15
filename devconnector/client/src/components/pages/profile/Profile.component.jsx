@@ -8,6 +8,7 @@ import Top from './items/Top.component'
 import About from './items/About.component'
 import Experience from './items/Experience.component'
 import Education from './items/Education.component'
+import GitHub from './items/GitHub.component'
 
 function Profile ({
   getProfileById,
@@ -60,7 +61,7 @@ function Profile ({
                 ) : <h4>No Education Credentials</h4>
               }
             </div>
-            {/* ProfileGitHub */}
+            {currentProfile.githubProfile && <GitHub username={currentProfile.githubProfile} />}
           </div>
         </Fragment>
       )}
