@@ -5,7 +5,9 @@ import {
   GET_PROFILE,
   GET_PROFILES,
   PROFILE_ERROR,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  GET_REPOS,
+  NO_REPOS
 } from './types'
 
 // Get current users profile
@@ -166,5 +168,19 @@ export const getProfileById = userId => async dispatch => {
         status: error.response.status
       }
     })
+  }
+}
+
+// Get repos from GitHub profile
+export const getGitHubRepos = username => async dispatch => {
+  try {
+    const response = await api.get(`/profile/github/${username}`)
+
+    dispatch({
+      type: GET_REPOS,
+      payload: response.data
+    })
+  } catch (error) {
+    dispatch({ type: NO_REPOS })
   }
 }
