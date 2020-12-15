@@ -138,7 +138,7 @@ function ProfileForm({
         />
         <InputItem
           name="githubProfile"
-          placeholder="GitHub profile"
+          placeholder="GitHub username"
           value={githubProfile}
           onChange={onFormChange}
           text="If you want your latest repos and a Github link, include your username"
