@@ -7,6 +7,7 @@ import Spinner from '../../layouts/Spinner/Spinner.component'
 import Top from './items/Top.component'
 import About from './items/About.component'
 import Experience from './items/Experience.component'
+import Education from './items/Education.component'
 
 function Profile ({
   getProfileById,
@@ -49,7 +50,15 @@ function Profile ({
             </div>
             <div className="profile-edu bg-white p-2">
               <h2 className="text-primary">Education</h2>
-              {/* ProfileEducation */}
+              {currentProfile.education.length > 0
+                ? (
+                  <Fragment>
+                    {currentProfile.education.map(edu => (
+                      <Education key={edu._id} education={edu} />
+                    ))}
+                  </Fragment>
+                ) : <h4>No Education Credentials</h4>
+              }
             </div>
             {/* ProfileGitHub */}
           </div>
