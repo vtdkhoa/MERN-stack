@@ -14,6 +14,7 @@ import ProfileForm from './pages/profile-forms/ProfileForm.component'
 import ExperienceForm from './pages/profile-forms/ExperienceForm.component'
 import EducationForm from './pages/profile-forms/EducationForm.component'
 import Profiles from './pages/profiles/Profiles.component'
+import Profile from './pages/profile/Profile.component'
 import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
@@ -36,12 +37,13 @@ const App = ({ loadUser }) => {
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/profiles" component={Profiles} />
+            <Route path="/profile/:id" component={Profile} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/create-profile" component={ProfileForm} />
             <PrivateRoute path="/edit-profile" component={ProfileForm} />
             <PrivateRoute path="/add-experience" component={ExperienceForm} />
             <PrivateRoute path="/add-education" component={EducationForm} />
-            <PrivateRoute path="/profiles" component={Profiles} />
           </Switch>
         </section>
       </Fragment>
