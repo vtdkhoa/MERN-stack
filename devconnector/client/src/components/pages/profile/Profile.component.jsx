@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import Top from './items/Top.component'
+import About from './items/About.component'
 
 function Profile ({
   getProfileById,
@@ -32,7 +33,7 @@ function Profile ({
           }
           <div className="profile-grid my-1">
             <Top profile={currentProfile} />
-            {/* ProfileAbout */}
+            <About profile={currentProfile} />
             <div className="profile-exp bg-white p-2">
               <h2 className="text-primary">Experience</h2>
               {/* ProfileExperience */}
