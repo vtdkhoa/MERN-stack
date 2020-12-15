@@ -15,7 +15,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   }
 
   const renderProfiles = profiles.map(profile => (
-    <ProfileItem key={profile._id} profile={profile}/>
+    <ProfileItem key={profile._id} profile={profile} />
   ))
 
   return (
