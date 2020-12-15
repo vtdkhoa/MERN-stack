@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import Top from './items/Top.component'
 import About from './items/About.component'
+import Experience from './items/Experience.component'
 
 function Profile ({
   getProfileById,
@@ -36,7 +37,15 @@ function Profile ({
             <About profile={currentProfile} />
             <div className="profile-exp bg-white p-2">
               <h2 className="text-primary">Experience</h2>
-              {/* ProfileExperience */}
+              {currentProfile.experience.length > 0
+                ? (
+                  <Fragment>
+                    {currentProfile.experience.map(exp => (
+                      <Experience key={exp._id} experience={exp} />
+                    ))}
+                  </Fragment>
+                ) : <h4>No Experience Credentials</h4>
+              }
             </div>
             <div className="profile-edu bg-white p-2">
               <h2 className="text-primary">Education</h2>
