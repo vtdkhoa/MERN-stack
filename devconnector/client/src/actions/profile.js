@@ -98,6 +98,28 @@ export const addExperience = (formData, history) => async dispatch => {
   }
 }
 
+// Delete experience
+export const deleteExperience = id => async dispatch => {
+  try {
+    const response = await api.delete(`/profile/delete/experience/${id}`)
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: response.data
+    })
+
+    dispatch(setAlert('Experience Deleted.', 'success'))
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
 // Add education
 export const addEducation = (formData, history) => async dispatch => {
   try {
