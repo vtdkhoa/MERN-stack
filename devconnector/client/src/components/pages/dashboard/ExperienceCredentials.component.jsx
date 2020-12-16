@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import Modal from '../../layouts/Modal/Modal.component'
 
 const ExperienceCredentials = ({ experience }) => {
+  const [show, setShow] = useState(false)
+
   if (experience.length <= 0) {
     return (
       <Fragment>
@@ -24,7 +27,7 @@ const ExperienceCredentials = ({ experience }) => {
       <td className="hide-sm">{exp.location}</td>
       <td className="hide-sm">{exp.description}</td>
       <td className="hide-sm">
-        <button className="btn btn-danger">
+        <button className="btn btn-danger" onClick={() => setShow(true)}>
           <i className="fas fa-minus-circle"></i> Delete
         </button>
       </td>
@@ -33,6 +36,9 @@ const ExperienceCredentials = ({ experience }) => {
 
   return (
     <Fragment>
+      <Modal show={show} handleClose={() => setShow(false)}>
+        <h4>Are you sure you want to delete your experience information ?</h4>
+      </Modal>
       <h2 className="my-2">Experience Credentials</h2>
       <table className="table">
         <thead>

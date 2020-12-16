@@ -1,8 +1,11 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import Modal from '../../layouts/Modal/Modal.component'
 
 const EducationCredentials = ({ education }) => {
+  const [show, setShow] = useState(false)
+
   if (education.length <= 0) {
     return (
       <Fragment>
@@ -25,7 +28,7 @@ const EducationCredentials = ({ education }) => {
       </td>
       <td className="hide-sm">{edu.description}</td>
       <td className="hide-sm">
-        <button className="btn btn-danger">
+        <button className="btn btn-danger" onClick={() => setShow(true)}>
           <i className="fas fa-minus-circle"></i> Delete
         </button>
       </td>
@@ -34,6 +37,9 @@ const EducationCredentials = ({ education }) => {
 
   return (
     <Fragment>
+      <Modal show={show} handleClose={() => setShow(false)}>
+        <h4>Are you sure you want to delete your education information ?</h4>
+      </Modal>
       <h2 className="my-2">Education Credentials</h2>
       <table className="table">
         <thead>
