@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCurrentProfile } from '../../../actions/profile'
@@ -7,11 +7,14 @@ import Spinner from '../../layouts/Spinner/Spinner.component'
 import DashboardActions from './DashboardActions.component'
 import ExperienceCredentials from './ExperienceCredentials.component'
 import EducationCredentials from './EducationCredentials.component'
+import Modal from '../../layouts/Modal/Modal.component'
 
 function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, loading } }) {
   useEffect(() => {
     getProfile()
   }, [getProfile])
+
+  const [show, setShow] = useState(false)
 
   if (loading && currentProfile === null) {
     return <Spinner />
@@ -29,8 +32,11 @@ function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, load
             <DashboardActions />
             <ExperienceCredentials experience={currentProfile.experience} />
             <EducationCredentials education={currentProfile.education} />
+            <Modal show={show} handleClose={() => setShow(false)}>
+              <h4>Are you sure you want to delete your account ?</h4>
+            </Modal>
             <div className="my-2">
-              <button className="btn btn-danger">
+              <button className="btn btn-danger" onClick={() => setShow(true)}>
                 <i className="fas fa-minus-circle"></i> Delete my account
               </button>
             </div>
