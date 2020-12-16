@@ -1,7 +1,7 @@
 import React from 'react'
 import './Modal.style.css'
 
-const Modal = ({ handleClose, show, children }) => {
+const Modal = ({ handleClose, handleDelete, show, children }) => {
   const modalClassName = show ? 'modal display-block' : 'modal display-none'
 
   return (
@@ -16,7 +16,7 @@ const Modal = ({ handleClose, show, children }) => {
         </div>
         <div className="modal-footer">
           <button className="btn btn-light" onClick={handleClose}>Close</button>
-          <button className="btn btn-danger">
+          <button className="btn btn-danger" onClick={handleDelete}>
             <i className="fas fa-fa-trash-alt" /> Delete
           </button>
         </div>

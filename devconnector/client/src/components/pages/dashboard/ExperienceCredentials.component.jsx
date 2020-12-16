@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from 'react'
+import { connect } from 'react-redux'
+import { deleteExperience } from '../../../actions/profile'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import Modal from '../../layouts/Modal/Modal.component'
 
-const ExperienceCredentials = ({ experience }) => {
+const ExperienceCredentials = ({ experience, deleteExperience }) => {
   const [show, setShow] = useState(false)
 
   if (experience.length <= 0) {
@@ -18,27 +20,33 @@ const ExperienceCredentials = ({ experience }) => {
   }
 
   const renderExperience = experience.map(exp => (
-    <tr key={exp._id}>
-      <td className="hide-sm">{exp.company}</td>
-      <td className="hide-sm">{exp.title}</td>
-      <td className="hide-sm">
-        {moment(exp.from).format('L')} - {exp.to ? moment(exp.to).format('L') : 'Now'}
-      </td>
-      <td className="hide-sm">{exp.location}</td>
-      <td className="hide-sm">{exp.description}</td>
-      <td className="hide-sm">
-        <button className="btn btn-danger" onClick={() => setShow(true)}>
-          <i className="fas fa-minus-circle"></i> Delete
-        </button>
-      </td>
-    </tr>
+    <Fragment key={exp._id}>
+      <Modal
+        show={show}
+        handleClose={() => setShow(false)}
+        handleDelete={() => deleteExperience(exp._id)}
+      >
+        <h4>Are you sure you want to delete your experience information ?</h4>
+      </Modal>
+      <tr>
+        <td className="hide-sm">{exp.company}</td>
+        <td className="hide-sm">{exp.title}</td>
+        <td className="hide-sm">
+          {moment(exp.from).format('L')} - {exp.to ? moment(exp.to).format('L') : 'Now'}
+        </td>
+        <td className="hide-sm">{exp.location}</td>
+        <td className="hide-sm">{exp.description}</td>
+        <td className="hide-sm">
+          <button className="btn btn-danger" onClick={() => setShow(true)}>
+            <i className="fas fa-minus-circle"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </Fragment>
   ))
 
   return (
     <Fragment>
-      <Modal show={show} handleClose={() => setShow(false)}>
-        <h4>Are you sure you want to delete your experience information ?</h4>
-      </Modal>
       <h2 className="my-2">Experience Credentials</h2>
       <table className="table">
         <thead>
@@ -58,7 +66,17 @@ const ExperienceCredentials = ({ experience }) => {
 }
 
 ExperienceCredentials.propTypes = {
-  experience: PropTypes.array.isRequired
+  experience: PropTypes.array.isRequired,
+  deleteExperience: PropTypes.func.isRequired
 }
 
-export default ExperienceCredentials
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteExperience: id => dispatch(deleteExperience(id))
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ExperienceCredentials)
