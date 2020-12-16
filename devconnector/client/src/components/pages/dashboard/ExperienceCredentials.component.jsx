@@ -20,7 +20,7 @@ const ExperienceCredentials = ({ experience, deleteExperience }) => {
   }
 
   const renderExperience = experience.map(exp => (
-    <Fragment>
+    <Fragment key={exp._id}>
       <Modal
         show={show}
         handleClose={() => setShow(false)}
@@ -28,7 +28,7 @@ const ExperienceCredentials = ({ experience, deleteExperience }) => {
       >
         <h4>Are you sure you want to delete your experience information ?</h4>
       </Modal>
-      <tr key={exp._id}>
+      <tr>
         <td className="hide-sm">{exp.company}</td>
         <td className="hide-sm">{exp.title}</td>
         <td className="hide-sm">
