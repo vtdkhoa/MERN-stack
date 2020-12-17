@@ -36,7 +36,7 @@ const App = ({ loadUser, logout }) => {
 
   // Clean up window
   useEffect(() => {
-    window.removeEventListener('storage')
+    return () => window.removeEventListener('storage')
   }, [])
 
   return (
