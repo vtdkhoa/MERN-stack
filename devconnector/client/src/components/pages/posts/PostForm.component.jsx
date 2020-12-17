@@ -32,7 +32,7 @@ const PostForm = () => {
             rows="5"
             placeholder="Create a post"
             value={paragraph}
-            name="title"
+            name="paragraph"
             onChange={onChange}
           ></textarea>
         </div>
