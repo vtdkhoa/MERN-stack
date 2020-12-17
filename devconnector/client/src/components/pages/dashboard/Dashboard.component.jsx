@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCurrentProfile } from '../../../actions/profile'
+import { getCurrentProfile, deleteAccount } from '../../../actions/profile'
 import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import DashboardActions from './DashboardActions.component'
@@ -9,7 +9,12 @@ import ExperienceCredentials from './ExperienceCredentials.component'
 import EducationCredentials from './EducationCredentials.component'
 import Modal from '../../layouts/Modal/Modal.component'
 
-function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, loading } }) {
+function Dashboard({
+  getProfile,
+  auth: { user },
+  profile: { currentProfile, loading },
+  deleteAccount
+}) {
   useEffect(() => {
     getProfile()
   }, [getProfile])
@@ -32,7 +37,11 @@ function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, load
             <DashboardActions />
             <ExperienceCredentials experience={currentProfile.experience} />
             <EducationCredentials education={currentProfile.education} />
-            <Modal show={show} handleClose={() => setShow(false)}>
+            <Modal
+              show={show}
+              handleClose={() => setShow(false)}
+              handleDelete={() => deleteAccount()}
+            >
               <h4>Are you sure you want to delete your account ?</h4>
             </Modal>
             <div className="my-2">
@@ -57,7 +66,8 @@ function Dashboard({ getProfile, auth: { user }, profile: { currentProfile, load
 Dashboard.propTypes = {
   getProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  deleteAccount: PropTypes.func.isRequired
 }
 
 const mapStateToProp = state => {
@@ -69,7 +79,8 @@ const mapStateToProp = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfile: () => dispatch(getCurrentProfile())
+    getProfile: () => dispatch(getCurrentProfile()),
+    deleteAccount: () => dispatch(deleteAccount())
   }
 }
 
