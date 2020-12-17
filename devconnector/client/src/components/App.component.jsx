@@ -19,6 +19,12 @@ import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
 const App = ({ loadUser, logout }) => {
+  const doLogout = () => {
+    if (!localStorage.token) {
+      logout()
+    }
+  }
+
   useEffect(() => {
     // Check for token in local storage
     if (localStorage.token) {
@@ -27,11 +33,9 @@ const App = ({ loadUser, logout }) => {
     loadUser()
 
     // Log user out from all tabs if they log out in one tab
-    window.addEventListener('storage', () => {
-      if (!localStorage.token) {
-        logout()
-      }
-    })
+    loadUser
+      ? window.addEventListener('storage', doLogout)
+      : window.removeEventListener('storage', doLogout)
   }, [loadUser])
 
   return (
