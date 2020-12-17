@@ -15,6 +15,7 @@ import ExperienceForm from './pages/profile-forms/ExperienceForm.component'
 import EducationForm from './pages/profile-forms/EducationForm.component'
 import Profiles from './pages/profiles/Profiles.component'
 import Profile from './pages/profile/Profile.component'
+import Posts from './pages/posts/Posts.component'
 import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
@@ -54,6 +55,7 @@ const App = ({ loadUser, logout }) => {
             <PrivateRoute path="/edit-profile" component={ProfileForm} />
             <PrivateRoute path="/add-experience" component={ExperienceForm} />
             <PrivateRoute path="/add-education" component={EducationForm} />
+            <PrivateRoute path="/posts" component={Posts} />
           </Switch>
         </section>
       </Fragment>
