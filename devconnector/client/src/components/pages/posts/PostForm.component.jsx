@@ -27,7 +27,6 @@ const PostForm = () => {
         </div>
         <div className="form-group">
           <textarea
-            name="text"
             cols="30"
             rows="5"
             placeholder="Create a post"
