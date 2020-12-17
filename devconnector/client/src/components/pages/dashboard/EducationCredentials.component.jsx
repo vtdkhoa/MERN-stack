@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from 'react'
+import { connect } from 'react-redux'
+import { deleteEducation } from '../../../actions/profile'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import Modal from '../../layouts/Modal/Modal.component'
 
-const EducationCredentials = ({ education }) => {
+const EducationCredentials = ({ education, deleteEducation }) => {
   const [show, setShow] = useState(false)
 
   if (education.length <= 0) {
@@ -19,27 +21,33 @@ const EducationCredentials = ({ education }) => {
   }
 
   const renderEducation = education.map(edu => (
-    <tr key={edu._id}>
-      <td className="hide-sm">{edu.school}</td>
-      <td className="hide-sm">{edu.degree}</td>
-      <td className="hide-sm">{edu.fieldOfStudy}</td>
-      <td className="hide-sm">
-        {moment(edu.from).format('L')} - {edu.to ? moment(edu.to).format('L') : 'Now'}
-      </td>
-      <td className="hide-sm">{edu.description}</td>
-      <td className="hide-sm">
-        <button className="btn btn-danger" onClick={() => setShow(true)}>
-          <i className="fas fa-minus-circle"></i> Delete
-        </button>
-      </td>
-    </tr>
+    <Fragment key={edu._id}>
+      <Modal
+        show={show}
+        handleClose={() => setShow(false)}
+        handleDelete={() => deleteEducation(edu._id)}
+      >
+        <h4>Are you sure you want to delete your education information ?</h4>
+      </Modal>
+      <tr>
+        <td className="hide-sm">{edu.school}</td>
+        <td className="hide-sm">{edu.degree}</td>
+        <td className="hide-sm">{edu.fieldOfStudy}</td>
+        <td className="hide-sm">
+          {moment(edu.from).format('L')} - {edu.to ? moment(edu.to).format('L') : 'Now'}
+        </td>
+        <td className="hide-sm">{edu.description}</td>
+        <td className="hide-sm">
+          <button className="btn btn-danger" onClick={() => setShow(true)}>
+            <i className="fas fa-minus-circle"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </Fragment>
   ))
 
   return (
     <Fragment>
-      <Modal show={show} handleClose={() => setShow(false)}>
-        <h4>Are you sure you want to delete your education information ?</h4>
-      </Modal>
       <h2 className="my-2">Education Credentials</h2>
       <table className="table">
         <thead>
@@ -59,7 +67,17 @@ const EducationCredentials = ({ education }) => {
 }
 
 EducationCredentials.propTypes = {
-  education: PropTypes.array.isRequired
+  education: PropTypes.array.isRequired,
+  deleteEducation: PropTypes.func.isRequired
 }
 
-export default EducationCredentials
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteEducation: id => dispatch(deleteEducation(id))
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EducationCredentials)

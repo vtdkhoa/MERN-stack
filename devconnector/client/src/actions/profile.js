@@ -151,6 +151,28 @@ export const addEducation = (formData, history) => async dispatch => {
   }
 }
 
+// Delete education
+export const deleteEducation = id => async dispatch => {
+  try {
+    const response = await api.delete(`/profile/delete/education/${id}`)
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: response.data
+    })
+
+    dispatch(setAlert('Education Deleted.', 'success'))
+  } catch (error) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
 // Get all profiles
 export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_PROFILE })
