@@ -36,7 +36,11 @@ const App = ({ loadUser, logout }) => {
 
   // Clean up window
   useEffect(() => {
-    return () => window.removeEventListener('storage')
+    return () => window.removeEventListener('storage', () => {
+      if (!localStorage.token) {
+        logout()
+      }
+    })
   }, [])
 
   return (
