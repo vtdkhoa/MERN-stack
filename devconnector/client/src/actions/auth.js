@@ -1,6 +1,5 @@
 import api from '../api'
 import { setAlert } from '../actions/alert'
-import setAuthToken from '../utils/setAuthToken'
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -47,10 +46,6 @@ export const register = ({ name, email, password }) => async dispatch => {
 
 // Load user
 export const loadUser = () => async dispatch => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token)
-  }
-
   try {
     const response = await api.get('/user/auth')
 
