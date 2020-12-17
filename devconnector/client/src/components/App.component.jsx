@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { loadUser } from '../actions/auth'
+import { loadUser, logout } from '../actions/auth'
 import setAuthToken from '../utils/setAuthToken'
 import PropTypes from 'prop-types'
 import Navbar from './layouts/Navbar.component'
@@ -18,13 +18,20 @@ import Profile from './pages/profile/Profile.component'
 import PrivateRoute from './routing/PrivateRoute.component'
 import './App.style.css'
 
-const App = ({ loadUser }) => {
+const App = ({ loadUser, logout }) => {
   useEffect(() => {
+    // Check for token in local storage
     if (localStorage.token) {
       setAuthToken(localStorage.token)
     }
-
     loadUser()
+
+    // Log user out from all tabs if they log out in one tab
+    window.addEventListener('storage', () => {
+      if (!localStorage.token) {
+        logout()
+      }
+    })
   }, [loadUser])
 
   return (
@@ -53,12 +60,14 @@ const App = ({ loadUser }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadUser: () => dispatch(loadUser())
+    loadUser: () => dispatch(loadUser()),
+    logout: () => dispatch(logout())
   }
 }
 
 App.propTypes = {
-  loadUser: PropTypes.func.isRequired
+  loadUser: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired
 }
 
 export default connect(
