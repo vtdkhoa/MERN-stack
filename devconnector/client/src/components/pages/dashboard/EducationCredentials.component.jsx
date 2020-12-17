@@ -20,12 +20,17 @@ const EducationCredentials = ({ education, deleteEducation }) => {
     )
   }
 
+  const handleDeleteEducation = id => {
+    deleteEducation(id)
+    setShow(false)
+  }
+
   const renderEducation = education.map(edu => (
     <Fragment key={edu._id}>
       <Modal
         show={show}
         handleClose={() => setShow(false)}
-        handleDelete={() => deleteEducation(edu._id)}
+        handleDelete={() => handleDeleteEducation(edu._id)}
       >
         <h4>Are you sure you want to delete your education information ?</h4>
       </Modal>
