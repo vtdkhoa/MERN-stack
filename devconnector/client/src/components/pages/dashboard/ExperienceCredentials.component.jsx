@@ -37,7 +37,7 @@ const ExperienceCredentials = ({ experience, deleteExperience }) => {
         <td className="hide-sm">{exp.company}</td>
         <td className="hide-sm">{exp.title}</td>
         <td className="hide-sm">
-          {moment(exp.from).format('L')} - {exp.to ? moment(exp.to).format('L') : 'Now'}
+          {moment(exp.from).format('LL')} - {exp.to ? moment(exp.to).format('LL') : 'Now'}
         </td>
         <td className="hide-sm">{exp.location}</td>
         <td className="hide-sm">{exp.description}</td>

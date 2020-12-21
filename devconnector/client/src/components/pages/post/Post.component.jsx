@@ -43,7 +43,7 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
         </div>
         <div>
           <h2>{title}</h2>
-          <p className="post-date">Posted on {moment(date).format('L')}</p>
+          <p className="post-date">Posted on {moment(date).format('LL')}</p>
           <p className="my-1">{paragraph}</p>
           <p className="my-1">
             {tags && tags.slice().map((tag, index) => (

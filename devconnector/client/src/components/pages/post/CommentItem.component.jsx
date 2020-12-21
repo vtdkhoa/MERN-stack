@@ -16,7 +16,7 @@ const CommentItem = ({ comment }) => {
       </div>
       <div>
         <p className="my-1">{text}</p>
-        <p className="post-date">{moment(date).format('L')}</p>
+        <p className="post-date">{moment(date).format('LL')}</p>
       </div>
     </div>
   )

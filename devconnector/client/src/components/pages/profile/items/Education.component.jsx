@@ -15,7 +15,7 @@ const Education = ({ education }) => {
   return (
     <div>
       <h3 className="text-dark">{school}</h3>
-      <p>{moment(from).format('L')} - {to ? moment(to).format('L') : 'Now'}</p>
+      <p>{moment(from).format('LL')} - {to ? moment(to).format('LL') : 'Now'}</p>
       <p><strong>Degree: </strong>{degree}</p>
       <p><strong>Field of Study: </strong>{fieldOfStudy}</p>
       <p><strong>Description: </strong>{description}</p>

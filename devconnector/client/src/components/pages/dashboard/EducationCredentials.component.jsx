@@ -39,7 +39,7 @@ const EducationCredentials = ({ education, deleteEducation }) => {
         <td className="hide-sm">{edu.degree}</td>
         <td className="hide-sm">{edu.fieldOfStudy}</td>
         <td className="hide-sm">
-          {moment(edu.from).format('L')} - {edu.to ? moment(edu.to).format('L') : 'Now'}
+          {moment(edu.from).format('LL')} - {edu.to ? moment(edu.to).format('LL') : 'Now'}
         </td>
         <td className="hide-sm">{edu.description}</td>
         <td className="hide-sm">
