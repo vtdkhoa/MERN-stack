@@ -22,12 +22,11 @@ const Top = ({ profile }) => {
       <p>{location && <span>{location}</span>}</p>
       <div className="icons my-1">
         {website && <SocialLink link={website} name="globe" />}
-        {social && social.twitter && <SocialLink link={social.twitter} name="twitter" />}
-        {social && social.facebook && <SocialLink link={social.facebook} name="facebook" />}
-        {social && social.linkedin && <SocialLink link={social.linkedin} name="linkedin" />}
-        {social && social.youtube && <SocialLink link={social.youtube} name="youtube" />}
-        {social && social.instagram && <SocialLink link={social.instagram} name="instagram" />}
-        {social && social.devto && <SocialLink link={social.devto} name="dev" />}
+        {
+          social && Object.entries(social).map(([key, value]) => (
+            <SocialLink key={key} link={value} name={key} />
+          ))
+        }
       </div>
     </div>
   )
