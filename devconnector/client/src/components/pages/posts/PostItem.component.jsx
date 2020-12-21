@@ -29,9 +29,9 @@ const PostItem = ({ post }) => {
         <h2>{title}</h2>
         <p className="my-1">{paragraph}</p>
         <p className="post-date">Posted on {moment(date).format('L')}</p>
-        <p classNameName="my-1">Tags:&nbsp;
+        <p className="my-1">Tags:&nbsp;
           {tags && tags.slice().map((tag, index) => (
-            <span key={index} classNameName="badge badge-success">{tag}</span>
+            <span key={index} className="badge badge-success">{tag}</span>
           ))}
         </p>
         <button type="button" className="btn btn-light">
