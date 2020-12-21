@@ -20,9 +20,7 @@ const Posts = ({ getPosts, post: { posts } }) => {
       <div className="posts">
         {
           posts.length > 0
-            ? posts.map(post => (
-              <PostItem key={post._id} post={post} />
-            ))
+            ? posts.map(post => <PostItem key={post._id} post={post} />)
             : <h4>No Post Found.</h4>
         }
       </div>
