@@ -15,7 +15,7 @@ const Experience = ({ experience }) => {
   return (
     <div>
       <h3 className="text-dark">{company}</h3>
-      <p>{moment(from).format('L')} - {to ? moment(to).format('L'): 'Now'}</p>
+      <p>{moment(from).format('LL')} - {to ? moment(to).format('LL'): 'Now'}</p>
       <p><strong>Position: </strong>{title}</p>
       <p><strong>Location: </strong>{location}</p>
       <p><strong>Description: </strong>{description}</p>
