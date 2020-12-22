@@ -3,6 +3,7 @@ import {
   GET_POST,
   GET_POSTS,
   ADD_LIKES,
+  ADD_COMMENT,
   POST_ERROR
 } from '../actions/types'
 
@@ -45,6 +46,15 @@ export default (state = initialState, action) => {
             likes: action.payload.likes
           } : post
         ),
+        loading: false
+      }
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: action.payload
+        },
         loading: false
       }
     case POST_ERROR:

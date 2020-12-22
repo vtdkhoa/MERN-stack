@@ -18,6 +18,7 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
   }
 
   const {
+    _id,
     tags,
     date,
     title,
@@ -56,7 +57,7 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
           </button>
         </div>
       </div>
-      <CommentForm />
+      <CommentForm postId={_id} />
       <div className="comments">
         <h2>Comments:</h2>
         {comments && comments.map(comment => (

@@ -5,7 +5,8 @@ import {
   GET_POSTS,
   POST_ERROR,
   GET_POST,
-  ADD_LIKES
+  ADD_LIKES,
+  ADD_COMMENT
 } from './types'
 
 // Create a post
@@ -79,6 +80,28 @@ export const addLike = id => async dispatch => {
       type: ADD_LIKES,
       payload: { id, likes: response.data }
     })
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Add comment
+export const addComment = (id, formData) => async dispatch => {
+  try {
+    const response = await api.patch(`post/comment/${id}`, formData)
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: response.data
+    })
+
+    dispatch(setAlert('Comment Added.', 'success'))
   } catch (error) {
     dispatch({
       type: POST_ERROR,
