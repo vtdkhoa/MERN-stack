@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import ProfileItem from './ProfileItem.component'
 
-const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+function Profiles ({ getProfiles, profile: { profiles, loading }, auth: { user } }) {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
@@ -14,9 +14,9 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
     return <Spinner />
   }
 
-  const renderProfiles = profiles.map(profile => (
-    <ProfileItem key={profile._id} profile={profile} />
-  ))
+  const renderProfiles = profiles
+    .filter(profile => profile.user._id !== user._id)
+    .map(pf => <ProfileItem key={pf._id} profile={pf} />)
 
   return (
     <Fragment>
@@ -39,7 +39,8 @@ Profiles.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profile: state.profile
+    profile: state.profile,
+    auth: state.auth
   }
 }
 
