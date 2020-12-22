@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Spinner from '../../layouts/Spinner/Spinner.component'
 import ProfileItem from './ProfileItem.component'
 
-function Profiles ({ getProfiles, profile: { profiles, loading }, auth: { user } }) {
+function Profiles({ getProfiles, profile: { profiles, loading }, auth: { user } }) {
   useEffect(() => {
     getProfiles()
   }, [getProfiles])
