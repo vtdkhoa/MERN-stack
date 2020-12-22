@@ -6,7 +6,8 @@ import {
   POST_ERROR,
   GET_POST,
   ADD_LIKES,
-  ADD_COMMENT
+  ADD_COMMENT,
+  REMOVE_COMMENT
 } from './types'
 
 // Create a post
@@ -74,7 +75,7 @@ export const getPost = id => async dispatch => {
 // Add like
 export const addLike = id => async dispatch => {
   try {
-    const response = await api.patch(`post/like/${id}`)
+    const response = await api.patch(`/post/like/${id}`)
 
     dispatch({
       type: ADD_LIKES,
@@ -94,7 +95,7 @@ export const addLike = id => async dispatch => {
 // Add comment
 export const addComment = (id, formData) => async dispatch => {
   try {
-    const response = await api.patch(`post/comment/${id}`, formData)
+    const response = await api.patch(`/post/comment/${id}`, formData)
 
     dispatch({
       type: ADD_COMMENT,
@@ -102,6 +103,28 @@ export const addComment = (id, formData) => async dispatch => {
     })
 
     dispatch(setAlert('Comment Added.', 'success'))
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Remove comment
+export const removeComment = (postId, commentId) => async dispatch => {
+  try {
+    await api.delete(`/post/comment/${postId}/${commentId}`)
+
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: commentId
+    })
+
+    dispatch(setAlert('Comment Removed.', 'success'))
   } catch (error) {
     dispatch({
       type: POST_ERROR,

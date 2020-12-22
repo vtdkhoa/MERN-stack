@@ -4,6 +4,7 @@ import {
   GET_POSTS,
   ADD_LIKES,
   ADD_COMMENT,
+  REMOVE_COMMENT,
   POST_ERROR
 } from '../actions/types'
 
@@ -54,6 +55,17 @@ export default (state = initialState, action) => {
         post: {
           ...state.post,
           comments: action.payload
+        },
+        loading: false
+      }
+    case REMOVE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            comment => comment._id !== action.payload
+          )
         },
         loading: false
       }
