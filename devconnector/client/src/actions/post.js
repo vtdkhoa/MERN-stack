@@ -1,5 +1,10 @@
 import api from '../api'
-import { GET_POSTS, POST_ERROR, GET_POST } from './types'
+import {
+  GET_POSTS,
+  POST_ERROR,
+  GET_POST,
+  ADD_LIKES
+} from './types'
 
 // Get all posts
 export const getPosts = () => async dispatch => {
@@ -29,6 +34,26 @@ export const getPost = id => async dispatch => {
     dispatch({
       type: GET_POST,
       payload: response.data
+    })
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Add like
+export const addLike = id => async dispatch => {
+  try {
+    const response = await api.patch(`post/like/${id}`)
+
+    dispatch({
+      type: ADD_LIKES,
+      payload: { id, likes: response.data }
     })
   } catch (error) {
     dispatch({

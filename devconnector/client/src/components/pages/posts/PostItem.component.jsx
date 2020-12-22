@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { addLike } from '../../../actions/post'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post, addLike }) => {
   const {
     _id,
     title,
@@ -34,7 +36,7 @@ const PostItem = ({ post }) => {
             <span key={index} className="badge badge-success">{tag}</span>
           ))}
         </p>
-        <button type="button" className="btn btn-light">
+        <button type="button" className="btn btn-light" onClick={() => addLike(_id)}>
           <i className="fas fa-thumbs-up"></i>&nbsp;
           <span>{likes.length}</span>
         </button>
@@ -50,7 +52,17 @@ const PostItem = ({ post }) => {
 }
 
 PostItem.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired
 }
 
-export default PostItem
+const mapDispatchToProps = dispatch => {
+  return {
+    addLike: id => dispatch(addLike(id))
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PostItem)
