@@ -1,42 +1,42 @@
 import React, { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getPosts } from '../../../actions/post'
+import { getMyPosts } from '../../../actions/post'
 import PropTypes from 'prop-types'
-import PostForm from './PostForm.component'
 import PostItem from './PostItem.component'
+import Spinner from '../../layouts/Spinner/Spinner.component'
 
-const Posts = ({ getPosts, post: { posts } }) => {
+const MyPosts = ({ getMyPosts, post: { myPosts, loading } }) => {
   useEffect(() => {
-    getPosts()
-  }, [getPosts])
+    getMyPosts()
+  }, [getMyPosts])
+
+  if (loading) {
+    return <Spinner />
+  }
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Posts</h1>
-      <p className="lead">
-        <i className="fas fa-user" /> Welcome to the community !
-      </p>
-      <PostForm />
+      <h1 className="large text-primary">My Posts</h1>
       <div className="posts">
         {
-          posts.length > 0
-            ? posts.map(post => (
+          myPosts.length > 0
+            ? myPosts.map(post => (
               <PostItem
                 key={post._id}
                 post={post}
-                showButton={false}
+                showButton={true}
               />
             ))
-            : <h4>No Post Found.</h4>
+          : <h4>You have no post.</h4>
         }
       </div>
     </Fragment>
   )
 }
 
-Posts.propTypes = {
+MyPosts.propTypes = {
   post: PropTypes.object.isRequired,
-  getPosts: PropTypes.func.isRequired
+  getMyPosts: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -47,11 +47,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPosts: () => dispatch(getPosts())
+    getMyPosts: () => dispatch(getMyPosts())
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Posts)
+)(MyPosts)

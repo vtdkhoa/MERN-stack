@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-const PostItem = ({ post, addLike }) => {
+const PostItem = ({ post, addLike, showButton }) => {
   const {
     _id,
     title,
@@ -43,9 +43,11 @@ const PostItem = ({ post, addLike }) => {
         <Link to={`/post/${_id}`} className="btn btn-primary">
           Discussion <span className='comment-count'>{comments.length}</span>
         </Link>
-        <button type="button" className="btn btn-danger">
-          <i className="fas fa-times"></i>
-        </button>
+        {showButton && (
+          <button type="button" className="btn btn-danger">
+            <i className="fas fa-minus-circle"></i> Delete
+          </button>
+        )}
       </div>
     </div>
   )

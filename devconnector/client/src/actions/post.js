@@ -5,6 +5,7 @@ import {
   GET_POSTS,
   POST_ERROR,
   GET_POST,
+  GET_MY_POSTS,
   ADD_LIKES,
   ADD_COMMENT,
   REMOVE_COMMENT
@@ -59,6 +60,26 @@ export const getPost = id => async dispatch => {
 
     dispatch({
       type: GET_POST,
+      payload: response.data
+    })
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Get user's own all posts
+export const getMyPosts = () => async dispatch => {
+  try {
+    const response = await api.get('/post')
+
+    dispatch({
+      type: GET_MY_POSTS,
       payload: response.data
     })
   } catch (error) {
