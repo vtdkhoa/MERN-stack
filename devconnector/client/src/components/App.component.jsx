@@ -49,8 +49,8 @@ const App = ({ loadUser, logout }) => {
           <Switch>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
-            <Route path="/profiles" component={Profiles} />
-            <Route path="/profile/:id" component={Profile} />
+            <PrivateRoute path="/profiles" component={Profiles} />
+            <PrivateRoute path="/profile/:id" component={Profile} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/create-profile" component={ProfileForm} />
             <PrivateRoute path="/edit-profile" component={ProfileForm} />
