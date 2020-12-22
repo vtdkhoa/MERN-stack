@@ -1,17 +1,34 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { createPost } from '../../../actions/post'
+import PropTypes from 'prop-types'
 
-const PostForm = () => {
-  const [formData, setFormData] = useState({ title: '', paragraph: '' })
+const PostForm = ({ createPost }) => {
+  const [formData, setFormData] = useState({
+    title: '',
+    paragraph: '',
+    tags: ''
+  })
 
   const onChange = event => setFormData({
     ...formData,
     [event.target.name]: event.target.value
   })
 
-  const { title, paragraph } = formData
+  const { title, paragraph, tags } = formData
+
+  const submit = event => {
+    event.preventDefault()
+    createPost({ title, paragraph, tags })
+    setFormData({
+      title: '',
+      paragraph: '',
+      tags: ''
+    })
+  }
 
   return (
-    <div className="post-form">
+    <div className="post-form" onSubmit={submit}>
       <div className="bg-primary p">
         <h3>Say Something...</h3>
       </div>
@@ -35,6 +52,15 @@ const PostForm = () => {
             onChange={onChange}
           ></textarea>
         </div>
+        <div className="form-group">
+          <input
+            type="text"
+            name="tags"
+            placeholder="Tags: HTML, CSS, JavaScript,..."
+            value={tags}
+            onChange={onChange}
+          />
+        </div>
         <button type="submit" className="btn btn-dark my-1">
           Submit
         </button>
@@ -43,4 +69,17 @@ const PostForm = () => {
   )
 }
 
-export default PostForm
+PostForm.propTypes = {
+  createPost: PropTypes.func.isRequired
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createPost: formData => dispatch(createPost(formData))
+  }
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PostForm)

@@ -1,10 +1,34 @@
 import api from '../api'
+import { setAlert } from './alert'
 import {
+  CREATE_POST,
   GET_POSTS,
   POST_ERROR,
   GET_POST,
   ADD_LIKES
 } from './types'
+
+// Create a post
+export const createPost = formData => async dispatch => {
+  try {
+    const response = await api.post('/post', formData)
+
+    dispatch({
+      type: CREATE_POST,
+      payload: response.data
+    })
+
+    dispatch(setAlert('Post Created.', 'success'))
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
 
 // Get all posts
 export const getPosts = () => async dispatch => {

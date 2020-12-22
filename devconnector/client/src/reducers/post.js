@@ -1,4 +1,5 @@
 import {
+  CREATE_POST,
   GET_POST,
   GET_POSTS,
   ADD_LIKES,
@@ -14,6 +15,15 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case CREATE_POST:
+      return {
+        ...state,
+        posts: [
+          ...state.posts,
+          action.payload
+        ],
+        loading: false
+      }
     case GET_POSTS:
       return {
         ...state,
