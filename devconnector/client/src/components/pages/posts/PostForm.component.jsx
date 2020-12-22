@@ -56,7 +56,7 @@ const PostForm = ({ createPost }) => {
           <input
             type="text"
             name="tags"
-            placeholder="Tags"
+            placeholder="Tags: HTML, CSS, JavaScript,..."
             value={tags}
             onChange={onChange}
           />
