@@ -73,7 +73,7 @@ export const getPost = id => async dispatch => {
   }
 }
 
-// Get user's own all posts
+// Get all user's own posts
 export const getMyPosts = () => async dispatch => {
   try {
     const response = await api.get('/post')
