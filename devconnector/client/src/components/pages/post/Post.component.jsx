@@ -61,7 +61,11 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
       <div className="comments">
         <h2>Comments:</h2>
         {comments && comments.map(comment => (
-          <CommentItem key={comment._id} comment={comment} />
+          <CommentItem
+            key={comment._id}
+            comment={comment}
+            postId={_id}
+          />
         ))}
       </div>
     </Fragment>
