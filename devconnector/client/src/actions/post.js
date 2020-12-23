@@ -8,7 +8,8 @@ import {
   GET_MY_POSTS,
   ADD_LIKES,
   ADD_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
+  DELETE_POST
 } from './types'
 
 // Create a post
@@ -146,6 +147,28 @@ export const removeComment = (postId, commentId) => async dispatch => {
     })
 
     dispatch(setAlert('Comment Removed.', 'success'))
+  } catch (error) {
+    dispatch({
+      type: POST_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status
+      }
+    })
+  }
+}
+
+// Delete a post
+export const deletePost = id => async dispatch => {
+  try {
+    await api.delete(`/post/${id}`)
+
+    dispatch({
+      type: DELETE_POST,
+      payload: id
+    })
+
+    dispatch(setAlert('Post Deleted.', 'success'))
   } catch (error) {
     dispatch({
       type: POST_ERROR,

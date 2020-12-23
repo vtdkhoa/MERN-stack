@@ -6,6 +6,7 @@ import {
   ADD_LIKES,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  DELETE_POST,
   POST_ERROR
 } from '../actions/types'
 
@@ -75,6 +76,14 @@ export default (state = initialState, action) => {
             comment => comment._id !== action.payload
           )
         },
+        loading: false
+      }
+    case DELETE_POST:
+      return {
+        ...state,
+        myPosts: state.myPosts.filter(
+          post => post._id !== action.payload
+        ),
         loading: false
       }
     case POST_ERROR:
