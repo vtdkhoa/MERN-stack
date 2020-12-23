@@ -19,6 +19,7 @@ import Posts from './pages/posts/Posts.component'
 import Post from './pages/post/Post.component'
 import MyPosts from './pages/posts/MyPosts.component'
 import PrivateRoute from './routing/PrivateRoute.component'
+import NotFound from './layouts/NotFound.component'
 import './App.style.css'
 
 const App = ({ loadUser, logout }) => {
@@ -60,6 +61,7 @@ const App = ({ loadUser, logout }) => {
             <PrivateRoute path="/posts" component={Posts} />
             <PrivateRoute path="/post/:id" component={Post} />
             <PrivateRoute path="/my-posts" component={MyPosts} />
+            <Route component={NotFound} />
           </Switch>
         </section>
       </Fragment>
