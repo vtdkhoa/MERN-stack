@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux'
-import { addLike } from '../../../actions/post'
+import { addLike, deletePost } from '../../../actions/post'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import Modal from '../../layouts/Modal/Modal.component'
 
-const PostItem = ({ post, addLike, showButton }) => {
+const PostItem = ({ post, addLike, showButton, deletePost }) => {
+  const [show, setShow] = useState(false)
   const {
     _id,
     title,
@@ -18,6 +20,11 @@ const PostItem = ({ post, addLike, showButton }) => {
     avatar,
     tags
   } = post
+
+  const handleDeletePost = id => {
+    deletePost(id)
+    setShow(false)
+  }
 
   return (
     <div className="post bg-white p-1 my-1">
@@ -44,9 +51,22 @@ const PostItem = ({ post, addLike, showButton }) => {
           Discussion <span className='comment-count'>{comments.length}</span>
         </Link>
         {showButton && (
-          <button type="button" className="btn btn-danger">
-            <i className="fas fa-minus-circle"></i> Delete
-          </button>
+          <Fragment>
+            <Modal
+              show={show}
+              handleClose={() => setShow(false)}
+              handleDelete={() => handleDeletePost(_id)}
+            >
+              <h4>Are you sure you want to delete this post ?</h4>
+            </Modal>
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() => setShow(true)}
+            >
+              <i className="fas fa-minus-circle"></i> Delete
+            </button>
+          </Fragment>
         )}
       </div>
     </div>
@@ -55,12 +75,14 @@ const PostItem = ({ post, addLike, showButton }) => {
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
-  addLike: PropTypes.func.isRequired
+  addLike: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addLike: id => dispatch(addLike(id))
+    addLike: id => dispatch(addLike(id)),
+    deletePost: id => dispatch(deletePost(id))
   }
 }
 
