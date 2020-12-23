@@ -39,7 +39,7 @@ const App = ({ loadUser, logout }) => {
     // Log user out from all tabs if they log out in one tab
     window.addEventListener('storage', handleLogout)
     return () => window.removeEventListener('storage', handleLogout)
-  }, [loadUser])
+  }, [])
 
   return (
     <Router>
