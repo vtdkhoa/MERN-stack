@@ -1,7 +1,10 @@
 const router = require('express').Router()
 
+// Middleware
+const auth = require('../../middleware/auth')
+
 // Controller
-const { create } = require('../../controllers/task')
+const { create, getTasks } = require('../../controllers/task')
 
 // Validator
 const { validator } = require('../../validators/task')
@@ -12,5 +15,12 @@ const { validator } = require('../../validators/task')
  * @access Private
  */
 router.post('/', validator, create)
+
+/**
+ * @route GET api/task
+ * @description Get all tasks
+ * @access Private
+ */
+router.get('/', auth, getTasks)
 
 module.exports = router

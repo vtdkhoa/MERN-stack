@@ -28,4 +28,21 @@ const create = async (req, res) => {
   }
 }
 
-module.exports = { create }
+const getTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ user: req.user.id })
+
+    if (!tasks) {
+      return res
+        .status(204)
+        .json({ msg: 'Have No Task.' })
+    }
+
+    res.json(tasks)
+  } catch (error) {
+    console.log(chalk.red(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+module.exports = { create, getTasks }
