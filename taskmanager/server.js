@@ -9,6 +9,7 @@ const connectDB = require('./config/db')
 // Routes
 const userRoute = require('./routes/apis/user')
 const authRoute = require('./routes/apis/auth')
+const taskRoute = require('./routes/apis/task')
 
 const app = express()
 // Connect Database
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 // Define Routes
 app.use('/api/user', userRoute)
 app.use('/api/user/auth', authRoute)
+app.use('/api/task', taskRoute)
 
 const PORT = process.env.PORT || 5000
 
