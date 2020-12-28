@@ -1,7 +1,10 @@
 const router = require('express').Router()
 
+// Middleware
+const auth = require('../../middleware/auth')
+
 // Controller
-const { register } = require('../../controllers/user')
+const { register, deleteAccount } = require('../../controllers/user')
 
 // Validator
 const { validator } = require('../../validators/user')
@@ -12,5 +15,12 @@ const { validator } = require('../../validators/user')
  * @access Public
  */
 router.post('/', validator, register)
+
+/**
+ * @route DELETE api/user
+ * @description Delete user
+ * @access Private
+ */
+router.delete('/', auth, deleteAccount)
 
 module.exports = router

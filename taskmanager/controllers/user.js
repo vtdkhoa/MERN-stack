@@ -7,6 +7,7 @@ const chalk = require('chalk')
 
 // Model
 const User = require('../models/User')
+const Task = require('../models/Task')
 
 const register = async (req, res) => {
   const errors = validationResult(req)
@@ -63,4 +64,18 @@ const register = async (req, res) => {
   }
 }
 
-module.exports = { register }
+const deleteAccount = async (req, res) => {
+  try {
+    // Remove User
+    await User.findOneAndRemove({ _id: req.user.id })
+    // Remove Task
+    await Task.findOneAndRemove({ user: req.user.id })
+
+    res.json({ msg: 'Account Deleted.' })
+  } catch (error) {
+    console.log(chalk.red(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+module.exports = { register, deleteAccount }
