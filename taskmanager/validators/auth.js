@@ -5,4 +5,6 @@ const loginValidator = [
   check('password', 'Password is required.').exists()
 ]
 
-module.exports = { loginValidator }
+module.exports = {
+  validator: loginValidator
+}
