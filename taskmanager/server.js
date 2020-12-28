@@ -6,6 +6,9 @@ const chalk = require('chalk')
 
 const connectDB = require('./config/db')
 
+// Routes
+const userRoute = require('./routes/apis/user')
+
 const app = express()
 // Connect Database
 connectDB()
@@ -20,6 +23,9 @@ app.use(xss())
 app.get('/', (req, res) => {
   res.send('API Server, start !')
 })
+
+// Define Routes
+app.use('/api/user', userRoute)
 
 const PORT = process.env.PORT || 5000
 
