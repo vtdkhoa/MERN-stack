@@ -62,4 +62,15 @@ const login = async (req, res) => {
   }
 }
 
-module.exports = { login }
+const authenticate = async (req, res) => {
+  try {
+    // Select user data except password
+    const user = await User.findById(req.user.id).select('-password')
+    res.json(user)
+  } catch (error) {
+    console.log(chalk.red(error.message))
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+module.exports = { login, authenticate }
