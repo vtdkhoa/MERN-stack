@@ -4,7 +4,7 @@ const router = require('express').Router()
 const auth = require('../../middleware/auth')
 
 // Controller
-const { create, getTasks } = require('../../controllers/task')
+const { create, getTasks, deleteTask } = require('../../controllers/task')
 
 // Validator
 const { validator } = require('../../validators/task')
@@ -22,5 +22,12 @@ router.post('/', validator, create)
  * @access Private
  */
 router.get('/', auth, getTasks)
+
+/**
+ * @route DELETE api/task/:id
+ * @description Delete a task
+ * @access Private
+ */
+router.delete('/:id', auth, deleteTask)
 
 module.exports = router

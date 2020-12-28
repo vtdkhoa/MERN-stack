@@ -45,4 +45,30 @@ const getTasks = async (req, res) => {
   }
 }
 
-module.exports = { create, getTasks }
+const deleteTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id)
+
+    // Check user
+    if (task.user.toString() !== req.user.id) {
+      return res
+        .status(401)
+        .json({ msg: 'User not authorized.' })
+    }
+
+    await task.remove()
+    res.json({ msg: 'Task Deleted.' })
+  } catch (error) {
+    console.log(chalk.red(error.message))
+
+    if (error.kind === 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'Task Not Found.' })
+    }
+
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+module.exports = { create, getTasks, deleteTask }
