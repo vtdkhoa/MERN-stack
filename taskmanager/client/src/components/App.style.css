@@ -1,0 +1,13 @@
+:root {
+  --white-color: #fff;
+  --black-color: #333;
+  --light-grey-color: #ccc;
+}
+
+body {
+  font-family: 'Roboto Mono', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
