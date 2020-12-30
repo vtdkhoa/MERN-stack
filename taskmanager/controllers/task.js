@@ -45,6 +45,30 @@ const getTasks = async (req, res) => {
   }
 }
 
+const getTask = async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.id)
+
+    if (!task) {
+      return res
+        .status(400)
+        .json({ msg: 'Task Not Found.' })
+    }
+
+    res.json(task)
+  } catch (error) {
+    console.log(chalk.red(error.message))
+
+    if (error.kind === 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'Task Not Found.' })
+    }
+
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
 const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id)
@@ -71,4 +95,4 @@ const deleteTask = async (req, res) => {
   }
 }
 
-module.exports = { create, getTasks, deleteTask }
+module.exports = { create, getTasks, getTask, deleteTask }
