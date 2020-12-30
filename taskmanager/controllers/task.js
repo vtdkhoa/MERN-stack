@@ -4,7 +4,7 @@ const chalk = require('chalk')
 // Model
 const Task = require('../models/Task')
 
-const create = async (req, res) => {
+const createTask = async (req, res) => {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
@@ -95,4 +95,35 @@ const deleteTask = async (req, res) => {
   }
 }
 
-module.exports = { create, getTasks, getTask, deleteTask }
+const updateTask = async (req, res) => {
+  const { title, content, priority, isFinished, notes } = req.body
+
+  try {
+    const updatedTask = new Task({
+      _id: req.params.id,
+      title, content, priority, isFinished, notes,
+      user: req.user.id
+    })
+
+    await Task.findByIdAndUpdate(req.params.id, updatedTask)
+    res.json(updatedTask)
+  } catch (error) {
+    console.log(chalk.red(error.message))
+
+    if (error.kind === 'ObjectId') {
+      return res
+        .status(400)
+        .json({ msg: 'Task Not Found.' })
+    }
+
+    res.status(500).send({ msg: 'Server Error.' })
+  }
+}
+
+module.exports = {
+  createTask,
+  getTasks,
+  getTask,
+  deleteTask,
+  updateTask
+}

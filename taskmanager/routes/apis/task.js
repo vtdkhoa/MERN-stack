@@ -4,7 +4,13 @@ const router = require('express').Router()
 const auth = require('../../middleware/auth')
 
 // Controller
-const { create, getTasks, getTask, deleteTask } = require('../../controllers/task')
+const {
+  createTask,
+  getTasks,
+  getTask,
+  deleteTask,
+  updateTask
+} = require('../../controllers/task')
 
 // Validator
 const { validator } = require('../../validators/task')
@@ -14,7 +20,7 @@ const { validator } = require('../../validators/task')
  * @description Create a new task
  * @access Private
  */
-router.post('/', validator, create)
+router.post('/', validator, createTask)
 
 /**
  * @route GET api/task
@@ -36,5 +42,12 @@ router.get('/:id', auth, getTask)
  * @access Private
  */
 router.delete('/:id', auth, deleteTask)
+
+/**
+ * @route GET api/task/:id
+ * @description Update a task
+ * @access Private
+ */
+router.put('/:id', auth, updateTask)
 
 module.exports = router
