@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.style.css'
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   return <div>App</div>
